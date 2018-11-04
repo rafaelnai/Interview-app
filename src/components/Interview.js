@@ -8,7 +8,8 @@ const Interview = (props) => {
     question,
     round,
     handleInputRadio,
-    sendResponse
+    sendResponse,
+    score
   } = props
 
   return (
@@ -38,6 +39,8 @@ const Interview = (props) => {
 
 
               {
+                round <= item.turn.length 
+                ?
                 item.turn.filter(turn => turn.round === round)
                   .map(item => item.alternatives.map((alternatives, index) =>
                     <p key={'alternative' + index}>
@@ -45,15 +48,25 @@ const Interview = (props) => {
                         <input
                           name="question"
                           type="radio"
-                          onClick={e => handleInputRadio(e)}
+                          onClick={e => handleInputRadio(e, alternatives.score)}
                           value={alternatives.response} />
                         <span>{alternatives.question}</span>
                       </label>
                     </p>
-                  ))
+                  )
+                )
+                : 
+                <p>
+                  Entrevista finalizada, sua pontuação atual é: {score}!
+                  Para mais entrevistas <a href="www.teste.com">clique aqui</a>,
+                  para finalizar <a href="www.teste.com">clique aqui</a>
+                </p>
               }
 
-              <button className="btn" onClick={e => sendResponse(e)}>Enviar Resposta</button>
+              {
+                round <= item.turn.length && 
+                <button className="btn" onClick={e => sendResponse(e)}>Enviar Resposta</button>
+              }
             </div>
           )
       }
