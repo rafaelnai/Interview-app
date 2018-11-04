@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import '../node_modules/materialize-css/dist/css/materialize.min.css'
-
+import Interview from './components/Interview'
 
 class App extends Component {
 
@@ -9,6 +9,8 @@ class App extends Component {
     this.state = {
       hasResponse: false,
       question: null,
+      round: 1,
+      score: 0,
     }
   }
 
@@ -23,49 +25,11 @@ class App extends Component {
   sendResponse(e) {
     e.preventDefault()
     //Envia resposta
-    
+
     this.state.question && this.setState({
-      hasResponse: true
+      hasResponse: true,
+      round: this.state.round + 1
     })
-  }
-
-  getQuestion() {
-
-    return [
-      {
-        person: 'Dona Josefa',
-        image: 'https://cdn0.iconfinder.com/data/icons/user-pictures/100/maturewoman-3-512.png',
-        description: [
-          '75 anos',
-          'Casada',
-          'Mãe de 5 filhos e vó de 4',
-          'Casada'
-        ],
-        id: 1,
-        alternatives: [
-          {
-            question: 'Possui Convênio?',
-            response: 'Sim',
-            correct: false
-          },
-          {
-            question: 'Qual foi a última vez que passou no médico?',
-            response: 'Não Lembro',
-            correct: false
-          },
-          {
-            question: 'Como vê a Saúde no Brasil',
-            response: 'Como assim?',
-            correct: false
-          },
-          {
-            question: 'Boa tarde, como vai a senhora?',
-            response: 'Vou levando meu filho',
-            correct: true
-          }
-        ],
-      }
-    ]
   }
 
   render() {
@@ -87,40 +51,13 @@ class App extends Component {
           </div>
 
           <div className="col m8">
-            <form>
-              <p>{ this.state.hasResponse && this.state.question }</p>
-              {
-                this.getQuestion()
-                  .map((item, index) =>
-                    <div key={item.person + index}>
-                      <img src={item.image} alt={item.person} width={200} />
-                      <h4>{item.person}</h4>
-
-                      {
-                        item.description
-                          .map((item, index) =>
-                            <p key={item + index}>{item}</p>)
-                      }
-
-                      {
-                        item.alternatives.map((alternatives, index) =>
-                          <p key={'alternative' + index}>
-                            <label>
-                              <input
-                                name="question"
-                                type="radio"
-                                onClick={e => this.handleInputRadio(e)}
-                                value={alternatives.response} />
-                              <span>{alternatives.question}</span>
-                            </label>
-                          </p>
-                        )
-                      }
-                      <button className="btn" onClick={e => this.sendResponse(e)}>Enviar Resposta</button>
-                    </div>
-                  )
-              }
-            </form>
+            <Interview
+              hasResponse={this.state.hasResponse}
+              question={this.state.question}
+              round={this.state.round}
+              handleInputRadio={e => this.handleInputRadio(e)}
+              sendResponse={e => this.sendResponse(e)}
+            />
           </div>
 
         </div>
