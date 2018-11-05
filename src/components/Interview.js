@@ -1,5 +1,6 @@
 import React from 'react'
 import jsonResponse from '../jsonResponse'
+import { Link } from 'react-router-dom'
 
 const Interview = (props) => {
 
@@ -7,6 +8,7 @@ const Interview = (props) => {
     hasResponse,
     question,
     round,
+    idPerson,
     handleInputRadio,
     sendResponse,
     score
@@ -23,7 +25,7 @@ const Interview = (props) => {
       }
 
       {
-        jsonResponse
+        jsonResponse.filter(person => person.idPerson === idPerson)
           .map((item, index) =>
             <div key={item.person + index}>
 
@@ -58,7 +60,7 @@ const Interview = (props) => {
                 : 
                 <p>
                   Entrevista finalizada, sua pontuação atual é: {score}!
-                  Para mais entrevistas <a href="www.teste.com">clique aqui</a>,
+                  Para mais entrevistas <Link to={{pathname: "/", state: { score: score }}}>clique aqui</Link>,
                   para finalizar <a href="www.teste.com">clique aqui</a>
                 </p>
               }
