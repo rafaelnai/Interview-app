@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
+import React, { Component } from 'react'
 import '../node_modules/materialize-css/dist/css/materialize.min.css'
-import Interview from './components/Interview'
+import InterviewContainer from './containers/InterviewContainer'
 
 class App extends Component {
 
@@ -10,9 +10,23 @@ class App extends Component {
       hasResponse: false,
       question: null,
       round: 1,
+      idPerson: null,
       currentScore: null,
-      score: 0,
+      score: 0
     }
+  }
+
+  componentWillMount() {
+    const id = this.props.match.params.id
+    
+    !!this.props.location.score &&
+    this.setState({
+      score: this.props.location.score.location.state.score
+    })
+
+    this.setState({
+      idPerson: parseInt(id)
+    }) 
   }
 
   handleInputRadio(e, score) {
@@ -36,36 +50,25 @@ class App extends Component {
   }
 
   render() {
+    if(this.state.idPerson)
     return (
       <div className="container">
-        <div className="row">
+        
+        {
+          this.state.idPerson &&
+          <InterviewContainer
+            hasResponse={this.state.hasResponse}
+            question={this.state.question}
+            round={this.state.round}
+            idPerson={this.state.idPerson}
+            handleInputRadio={(e, score) => this.handleInputRadio(e, score)}
+            sendResponse={e => this.sendResponse(e)}
+            score={this.state.score}
+          />
+        }
 
-          <div className="col m4">
-            <div className="card-panel">
-
-              <div className="row">
-                <div className="input-field col s12">
-                  <textarea id="textarea1" className="materialize-textarea"></textarea>
-                  <label htmlFor="textarea1">Textarea</label>
-                </div>
-              </div>
-
-            </div>
-          </div>
-
-          <div className="col m8">
-            <Interview
-              hasResponse={this.state.hasResponse}
-              question={this.state.question}
-              round={this.state.round}
-              handleInputRadio={(e, score) => this.handleInputRadio(e, score)}
-              sendResponse={e => this.sendResponse(e)}
-              score={this.state.score}
-            />
-          </div>
-
-        </div>
       </div>
+
     );
   }
 }
