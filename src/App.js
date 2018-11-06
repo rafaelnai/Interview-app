@@ -18,10 +18,11 @@ class App extends Component {
 
   componentWillMount() {
     const id = this.props.match.params.id
+    const params = this.props.location.params
     
-    !!this.props.location.score &&
+    !!params && params.score &&
     this.setState({
-      score: this.props.location.score.location.state.score
+      score: params.score
     })
 
     this.setState({
@@ -30,7 +31,7 @@ class App extends Component {
   }
 
   handleInputRadio(e, score) {
-
+    
     this.setState({
       hasResponse: false,
       question: e.target.value,
@@ -47,6 +48,8 @@ class App extends Component {
       round: this.state.round + 1,
       score: this.state.score + this.state.currentScore
     })
+
+    e.target.reset()
   }
 
   render() {

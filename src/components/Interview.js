@@ -15,7 +15,7 @@ const Interview = (props) => {
   } = props
 
   return (
-    <form>
+    <form onSubmit={e => sendResponse(e)}>
 
       {
         hasResponse &&
@@ -51,7 +51,7 @@ const Interview = (props) => {
                           name="question"
                           type="radio"
                           onClick={e => handleInputRadio(e, alternatives.score)}
-                          value={alternatives.response} />
+                          value={alternatives.response}/>
                         <span>{alternatives.question}</span>
                       </label>
                     </p>
@@ -60,14 +60,14 @@ const Interview = (props) => {
                 : 
                 <p>
                   Entrevista finalizada, sua pontuação atual é: {score}!
-                  Para mais entrevistas <Link to={{pathname: "/", state: { score: score }}}>clique aqui</Link>,
+                  Para mais entrevistas <Link to={{pathname: "/", params: { score, idPerson }}}>clique aqui</Link>,
                   para finalizar <a href="www.teste.com">clique aqui</a>
                 </p>
               }
 
               {
                 round <= item.turn.length && 
-                <button className="btn" onClick={e => sendResponse(e)}>Enviar Resposta</button>
+                <button className="btn" type="submit">Enviar Resposta</button>
               }
             </div>
           )

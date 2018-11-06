@@ -7,7 +7,7 @@ const Card = props => {
     imagePath,
     content,
     idPerson,
-    score
+    params
   } = props 
 
   return (
@@ -23,7 +23,7 @@ const Card = props => {
           <div className="card-action">
             <Link to={{
               pathname: '/interview/' + idPerson,
-              score: score
+              params: params
             }}>
               Entrevistar
             </Link>
