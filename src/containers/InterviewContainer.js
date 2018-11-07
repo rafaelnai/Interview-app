@@ -9,6 +9,7 @@ const InterviewContainer = props => {
     question,
     round,
     idPerson,
+    blockedPerson,
     handleInputRadio,
     sendResponse,
     score
@@ -27,6 +28,7 @@ const InterviewContainer = props => {
           question={question}
           round={round}
           idPerson={idPerson}
+          blockedPerson={blockedPerson}
           handleInputRadio={(e, score) => handleInputRadio(e, score)}
           sendResponse={e => sendResponse(e)}
           score={score}

@@ -4,16 +4,22 @@ import jsonResponse from '../jsonResponse'
 
 const ListCards = props => {
 
-  return (
+  const blockedPerson = !!props.location.params ? props.location.params.blockedPerson : []
+  // jsonResponse.forEach(person => blockedPerson.indexOf(person.idPerson) === -1 ? true : false)
+
+  return(
     <div className="row">
       {
-        jsonResponse.map(response =>
+        jsonResponse
+        .filter(person => blockedPerson.indexOf(person.idPerson) === -1)
+        .map(response =>
           <Card
             key={response.idPerson}
             imagePath={response.image}
             content={response.description}
             idPerson={response.idPerson}
-            params={props.location.params}
+            params={!!props.location.params && props.location.params}
+            action={true}
           />
         )
       }

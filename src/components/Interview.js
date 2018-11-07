@@ -2,17 +2,20 @@ import React from 'react'
 import jsonResponse from '../jsonResponse'
 import { Link } from 'react-router-dom'
 
-const Interview = (props) => {
+const Interview = props => {
 
   const {
     hasResponse,
     question,
     round,
     idPerson,
+    blockedPerson,
     handleInputRadio,
     sendResponse,
     score
   } = props
+
+  console.log(blockedPerson)
 
   return (
     <form onSubmit={e => sendResponse(e)}>
@@ -60,7 +63,19 @@ const Interview = (props) => {
                 : 
                 <p>
                   Entrevista finalizada, sua pontuação atual é: {score}!
-                  Para mais entrevistas <Link to={{pathname: "/", params: { score, idPerson }}}>clique aqui</Link>,
+                  Para mais entrevistas 
+                  <Link to={{
+                    pathname: "/",
+                    params: { 
+                      score,
+                      idPerson,
+                      blockedPerson: !!blockedPerson
+                      ? blockedPerson.concat(idPerson)
+                      : [].concat(idPerson)
+                    }
+                  }}>
+                    clique aqui
+                  </Link>,
                   para finalizar <a href="www.teste.com">clique aqui</a>
                 </p>
               }

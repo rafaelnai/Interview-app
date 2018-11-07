@@ -11,6 +11,7 @@ class App extends Component {
       question: null,
       round: 1,
       idPerson: null,
+      blockedPerson: null,
       currentScore: null,
       score: 0
     }
@@ -19,15 +20,19 @@ class App extends Component {
   componentWillMount() {
     const id = this.props.match.params.id
     const params = this.props.location.params
+
+    console.log("App Params:", params)
     
     !!params && params.score &&
     this.setState({
-      score: params.score
+      score: params.score,
+      blockedPerson: params.blockedPerson
     })
 
     this.setState({
       idPerson: parseInt(id)
     }) 
+
   }
 
   handleInputRadio(e, score) {
@@ -49,6 +54,7 @@ class App extends Component {
       score: this.state.score + this.state.currentScore
     })
 
+    //limpa as opções selecionadas
     e.target.reset()
   }
 
@@ -64,6 +70,7 @@ class App extends Component {
             question={this.state.question}
             round={this.state.round}
             idPerson={this.state.idPerson}
+            blockedPerson={this.state.blockedPerson}
             handleInputRadio={(e, score) => this.handleInputRadio(e, score)}
             sendResponse={e => this.sendResponse(e)}
             score={this.state.score}

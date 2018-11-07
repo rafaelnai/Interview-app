@@ -7,7 +7,8 @@ const Card = props => {
     imagePath,
     content,
     idPerson,
-    params
+    params,
+    isBlocked
   } = props 
 
   return (
@@ -21,12 +22,16 @@ const Card = props => {
             <p>{content}</p>
           </div>
           <div className="card-action">
-            <Link to={{
-              pathname: '/interview/' + idPerson,
-              params: params
-            }}>
-              Entrevistar
-            </Link>
+            { 
+              !isBlocked ?
+                <Link to={{
+                  pathname: '/interview/' + idPerson,
+                  params: params
+                }}>
+                  Entrevistar
+                </Link>
+              : <div>Já Entrevistado</div>
+            }
           </div>
         </div>
       </div>
