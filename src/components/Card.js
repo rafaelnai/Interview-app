@@ -11,6 +11,11 @@ const Card = props => {
     isBlocked
   } = props 
 
+  const preStyle = {
+    whiteSpace: 'inherit',
+    minHeight: '45px'
+  }
+
   return (
     <div className="col s12 m4">
       <div className="card">
@@ -19,7 +24,7 @@ const Card = props => {
         </div>
         <div className="card-stacked">
           <div className="card-content">
-            <p>{content}</p>
+            <pre style={preStyle}>{content}</pre>
           </div>
           <div className="card-action">
             { 
