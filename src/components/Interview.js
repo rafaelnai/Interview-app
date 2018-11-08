@@ -15,7 +15,14 @@ const Interview = props => {
     score
   } = props
 
-  console.log(blockedPerson)
+  const Styles = {
+    link: {
+      marginRight: '20px'
+    },
+    action: {
+      marginTop: '40px'
+    }
+  }
 
   return (
     <form onSubmit={e => sendResponse(e)}>
@@ -82,7 +89,11 @@ const Interview = props => {
 
               {
                 round <= item.turn.length && 
-                <button className="btn" type="submit">Enviar Resposta</button>
+                <div style={Styles.action}>
+                  <Link style={Styles.link} to="/">Parar de entrevistar</Link>
+                  <button className="btn" type="submit">Enviar Resposta</button>
+                </div>
+                
               }
             </div>
           )
