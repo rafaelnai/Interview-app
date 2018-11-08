@@ -21,7 +21,7 @@ const ListCards = props => {
   return(
     <div className="row">
       {
-        !displayPerson.length ?
+        !!displayPerson.length ?
           displayPerson.map(response =>
             <Card
               key={response.idPerson}
