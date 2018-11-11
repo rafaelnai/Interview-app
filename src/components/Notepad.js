@@ -1,17 +1,19 @@
 import React from 'react'
+import { Grid, TextField } from '@material-ui/core';
 
 const Notepad = () => {
 
   return (
-    <div className="card-panel">
-
-      <div className="row">
-        <div className="input-field col s12">
-          <textarea id="textarea1" className="materialize-textarea"></textarea>
-        </div>
-      </div>
-
-    </div>
+    <Grid item sm={12} md={10}>
+      <TextField
+        label="Anotações"
+        multiline
+        rows="20"
+        margin="normal"
+        variant="outlined"
+        fullWidth
+      />
+    </Grid>
   )
 }
 

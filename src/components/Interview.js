@@ -1,6 +1,23 @@
 import React from 'react'
+import Grid from '@material-ui/core/Grid'
 import jsonResponse from '../jsonResponse'
 import { Link } from 'react-router-dom'
+import { withStyles, Paper, Typography } from '@material-ui/core';
+import Button from '@material-ui/core/Button'
+
+const styles = {
+  paper: {
+    padding: '15px',  
+    marginBottom: '1rem'
+  },
+  link: {
+    marginRight: '20px',
+    textDecoration: 'none'
+  },
+  action: {
+    marginTop: '40px'
+  }
+}
 
 const Interview = props => {
 
@@ -12,26 +29,18 @@ const Interview = props => {
     blockedPerson,
     handleInputRadio,
     sendResponse,
-    score
+    score,
+    classes
   } = props
-
-  const Styles = {
-    link: {
-      marginRight: '20px'
-    },
-    action: {
-      marginTop: '40px'
-    }
-  }
 
   return (
     <form onSubmit={e => sendResponse(e)}>
-
+      
       {
         hasResponse &&
-        <div className="card-panel teal">
-          <span className="white-text">{question}</span>
-        </div>
+        <Paper className={classes.paper}>
+          <span>{question}</span>
+        </Paper>
       }
 
       {
@@ -39,15 +48,21 @@ const Interview = props => {
           .map((item, index) =>
             <div key={item.person + index}>
 
-              <div className="row">
-                <div className="col m6">
+              <Grid container justify="center" alignItems="center">
+
+                <Grid item sm={12} md={6}>
                   <img src={item.image} alt={item.person} height={200} />
-                </div>
-                <div className="col m6">
-                  <h4>{item.person}</h4>
-                  <pre>{item.description}</pre>
-                </div>
-              </div>
+                </Grid>
+
+                <Grid item sm={12} md={6}>
+                  <Typography variant="h4">{item.person}</Typography>
+                  {
+                    item.description.map((desc, index) => 
+                      <Typography key={"desc" + index} variant="body1">{desc}</Typography>)
+                  }
+                </Grid>
+
+              </Grid>
 
 
               {
@@ -55,7 +70,7 @@ const Interview = props => {
                 ?
                 item.turn.filter(turn => turn.round === round)
                   .map(item => item.alternatives.map((alternatives, index) =>
-                    <p key={'alternative' + index}>
+                    <Typography variant="body1" key={'alternative' + index}>
                       <label>
                         <input
                           name="question"
@@ -64,7 +79,7 @@ const Interview = props => {
                           value={alternatives.response}/>
                         <span>{alternatives.question}</span>
                       </label>
-                    </p>
+                    </Typography>
                   )
                 )
                 : 
@@ -72,7 +87,7 @@ const Interview = props => {
                   Entrevista finalizada, sua pontuação atual é: {score}!
                   Para mais entrevistas 
                   <Link to={{
-                    pathname: "/",
+                    pathname: "/persons",
                     params: { 
                       score,
                       idPerson,
@@ -83,15 +98,17 @@ const Interview = props => {
                   }}>
                     clique aqui
                   </Link>,
-                  para finalizar <a href="www.teste.com">clique aqui</a>
+                  para finalizar <Link to="/persons">clique aqui</Link>
                 </p>
               }
 
               {
                 round <= item.turn.length && 
-                <div style={Styles.action}>
-                  <Link style={Styles.link} to="/">Parar de entrevistar</Link>
-                  <button className="btn" type="submit">Enviar Resposta</button>
+                <div className={classes.action}>
+                  <Link className={classes.link} to="/persons">
+                    <Button color="primary">Parar de entrevistar</Button>
+                  </Link>
+                  <Button variant="contained" color="primary" type="submit">Entrevistar</Button>
                 </div>
                 
               }
@@ -102,4 +119,4 @@ const Interview = props => {
   )
 }
 
-export default Interview
+export default withStyles(styles)(Interview)

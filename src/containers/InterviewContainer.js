@@ -1,6 +1,15 @@
 import React from 'react'
+import Grid from '@material-ui/core/Grid'
 import Notepad from '../components/Notepad';
 import Interview from '../components/Interview';
+import { withStyles } from '@material-ui/core';
+
+const styles = {
+  root: {
+    maxWidth: 1080,
+    margin: '0 auto'
+  }
+}
 
 const InterviewContainer = props => {
 
@@ -12,17 +21,23 @@ const InterviewContainer = props => {
     blockedPerson,
     handleInputRadio,
     sendResponse,
-    score
+    score,
+    classes
   } = props
 
   return (
-    <div className="row">
+    <Grid
+      container
+      justify="center"
+      alignItems="center"
+      className={classes.root}
+    >
 
-      <div className="col m4">
+      <Grid item sm={12} md={4}>
         <Notepad />
-      </div>
+      </Grid>
 
-      <div className="col m8">
+      <Grid item sm={12} md={8}>
         <Interview
           hasResponse={hasResponse}
           question={question}
@@ -33,10 +48,10 @@ const InterviewContainer = props => {
           sendResponse={e => sendResponse(e)}
           score={score}
         />
-      </div>
+      </Grid>
 
-    </div>
+    </Grid>
   )
 }
 
-export default InterviewContainer
+export default withStyles(styles)(InterviewContainer)

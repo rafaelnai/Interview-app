@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
-import '../node_modules/materialize-css/dist/css/materialize.min.css'
 import InterviewContainer from './containers/InterviewContainer'
+import Grid from '@material-ui/core/Grid'
 
 class App extends Component {
 
@@ -21,22 +21,20 @@ class App extends Component {
     const id = this.props.match.params.id
     const params = this.props.location.params
 
-    console.log("App Params:", params)
-    
     !!params && params.score &&
-    this.setState({
-      score: params.score,
-      blockedPerson: params.blockedPerson
-    })
+      this.setState({
+        score: params.score,
+        blockedPerson: params.blockedPerson
+      })
 
     this.setState({
       idPerson: parseInt(id)
-    }) 
+    })
 
   }
 
   handleInputRadio(e, score) {
-    
+
     this.setState({
       hasResponse: false,
       question: e.target.value,
@@ -59,27 +57,26 @@ class App extends Component {
   }
 
   render() {
-    if(this.state.idPerson)
-    return (
-      <div className="container">
-        
-        {
-          this.state.idPerson &&
-          <InterviewContainer
-            hasResponse={this.state.hasResponse}
-            question={this.state.question}
-            round={this.state.round}
-            idPerson={this.state.idPerson}
-            blockedPerson={this.state.blockedPerson}
-            handleInputRadio={(e, score) => this.handleInputRadio(e, score)}
-            sendResponse={e => this.sendResponse(e)}
-            score={this.state.score}
-          />
-        }
+    if (this.state.idPerson)
+      return (
+        <Grid className="container">
 
-      </div>
+          {
+            this.state.idPerson &&
+            <InterviewContainer
+              hasResponse={this.state.hasResponse}
+              question={this.state.question}
+              round={this.state.round}
+              idPerson={this.state.idPerson}
+              blockedPerson={this.state.blockedPerson}
+              handleInputRadio={(e, score) => this.handleInputRadio(e, score)}
+              sendResponse={e => this.sendResponse(e)}
+              score={this.state.score}
+            />
+          }
 
-    );
+        </Grid>
+      );
   }
 }
 
