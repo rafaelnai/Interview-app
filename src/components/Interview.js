@@ -107,7 +107,20 @@ const Interview = props => {
               {
                 round <= item.turn.length && 
                 <div className={classes.action}>
-                  <Link className={classes.link} to="/persons">
+                  <Link className={classes.link} to={{
+                    pathname: "/persons",
+                    params: { 
+                      score,
+                      idPerson,
+                      blockedPerson: !!blockedPerson
+                      ? blockedPerson.concat(idPerson)
+                      : [].concat(idPerson)
+                    },
+                    userInfo: {
+                      name: userInfo.name,
+                      email: userInfo.email
+                    }
+                  }}>
                     <Button color="primary">Parar de entrevistar</Button>
                   </Link>
                   <Button variant="contained" color="primary" type="submit">Entrevistar</Button>

@@ -1,12 +1,26 @@
-import React from 'react'
-import { TextField, Grid, Button } from '@material-ui/core';
+import React, { Component } from 'react'
+import { TextField, Grid, Button, Paper, Typography, withStyles } from '@material-ui/core';
 
-const InterviewForm = props => {
+const styles = {
+  padding: {
+    padding: 20
+  }
+}
 
-  const { score, user, email } = props
-  let proposal = ''
+class InterviewForm extends Component {
 
-  const sendEmail = () => {
+  constructor() {
+    super()
+    this.state = {
+      proposal: null,
+      status: null,
+      isFetching: null
+    }
+  }
+
+  sendEmail() {
+
+    const { score, user, email } = this.props
 
     let data = {
       service_id: 'interviewGmail',
@@ -18,9 +32,13 @@ const InterviewForm = props => {
         'name': user,
         'email': email,
         'score': score,
-        'proposal': proposal
+        'proposal': this.state.proposal
       }
     }
+
+    this.setState({
+      isFetching: true
+    })
 
     fetch('https://api.emailjs.com/api/v1.0/email/send', {
       method: 'POST',
@@ -30,30 +48,55 @@ const InterviewForm = props => {
       },
       body: JSON.stringify(data)
     })
+    .then(result => this.setState({ status: result.status }))
+    .then(this.setState({ isFetching: true }))
   }
 
-  return (
+  handleTextChange(e) {
+    this.setState({
+      proposal: e.target.value
+    })
+  }
 
-    <Grid item sm={12}>
-      <TextField
-        label="Proposta"
-        multiline
-        rows="5"
-        margin="normal"
-        variant="outlined"
-        fullWidth
-        onChange={e => proposal = e.target.value }
-      />
+  render() {
 
-      <Button
-        variant="contained"
-        color="primary"
-        onClick={() => sendEmail()}
-      >
-        Enviar Proposta
-      </Button>
-    </Grid>
-  )
+    const { classes } = this.props
+
+    return (
+  
+      <Grid item sm={12}>
+  
+        {
+          this.state.status && <Paper>
+            {
+              this.state.status === 200
+              ? <Typography variant="body1" className={classes.padding}>Entrevistas finalizadas, o gestor receberá um e-mail!</Typography>
+              : <Typography variant="body1" className={classes.padding}>Erro ao finalizar entrevista</Typography>
+            }
+          </Paper>
+        }
+  
+        <TextField
+          label="Proposta"
+          multiline
+          rows="5"
+          margin="normal"
+          variant="outlined"
+          fullWidth
+          onChange={e => this.handleTextChange(e) }
+        />
+  
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={() => this.sendEmail()}
+          disabled={!(this.state.proposal) || this.state.isFetching}
+        >
+          Enviar Proposta
+        </Button>
+      </Grid>
+    )
+  }
 }
 
-export default InterviewForm
+export default withStyles(styles)(InterviewForm)
