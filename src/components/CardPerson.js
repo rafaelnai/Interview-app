@@ -27,7 +27,8 @@ const CardPerson = props => {
     content,
     idPerson,
     params,
-    classes
+    classes,
+    userInfo
   } = props
 
   return (
@@ -35,7 +36,8 @@ const CardPerson = props => {
       <Card className={classes.card}>
         <Link className={classes.link} to={{
           pathname: '/interview/' + idPerson,
-          params: params
+          params: params,
+          userInfo: userInfo
         }}>
           <CardActionArea>
             <CardMedia

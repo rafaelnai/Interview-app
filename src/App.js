@@ -13,19 +13,23 @@ class App extends Component {
       idPerson: null,
       blockedPerson: null,
       currentScore: null,
-      score: 0
+      score: 0,
+      userInfo: null
     }
   }
 
   componentWillMount() {
     const id = this.props.match.params.id
     const params = this.props.location.params
+    const userInfo = this.props.location.userInfo
 
     !!params && params.score &&
       this.setState({
         score: params.score,
         blockedPerson: params.blockedPerson
       })
+
+    !!userInfo && this.setState({ userInfo })
 
     this.setState({
       idPerson: parseInt(id)
@@ -72,6 +76,7 @@ class App extends Component {
               handleInputRadio={(e, score) => this.handleInputRadio(e, score)}
               sendResponse={e => this.sendResponse(e)}
               score={this.state.score}
+              userInfo={this.state.userInfo}
             />
           }
 

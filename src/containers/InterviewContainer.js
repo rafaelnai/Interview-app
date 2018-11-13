@@ -22,7 +22,8 @@ const InterviewContainer = props => {
     handleInputRadio,
     sendResponse,
     score,
-    classes
+    classes,
+    userInfo
   } = props
 
   return (
@@ -47,6 +48,7 @@ const InterviewContainer = props => {
           handleInputRadio={(e, score) => handleInputRadio(e, score)}
           sendResponse={e => sendResponse(e)}
           score={score}
+          userInfo={userInfo}
         />
       </Grid>
 

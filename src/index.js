@@ -7,7 +7,7 @@ import App from './App'
 import * as serviceWorker from './serviceWorker'
 import Notepad from './components/Notepad'
 import ListCards from './components/ListCards'
-import RegisterForm from './components/RegisterForm';
+import RegisterForm from './components/RegisterForm'
 
 ReactDOM.render(
   <BrowserRouter>

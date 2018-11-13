@@ -30,7 +30,8 @@ const Interview = props => {
     handleInputRadio,
     sendResponse,
     score,
-    classes
+    classes,
+    userInfo
   } = props
 
   return (
@@ -85,7 +86,7 @@ const Interview = props => {
                 : 
                 <p>
                   Entrevista finalizada, sua pontuação atual é: {score}!
-                  Para mais entrevistas 
+                  Para mais entrevistas  
                   <Link to={{
                     pathname: "/persons",
                     params: { 
@@ -94,11 +95,12 @@ const Interview = props => {
                       blockedPerson: !!blockedPerson
                       ? blockedPerson.concat(idPerson)
                       : [].concat(idPerson)
+                    },
+                    userInfo: {
+                      name: userInfo.name,
+                      email: userInfo.email
                     }
-                  }}>
-                    clique aqui
-                  </Link>,
-                  para finalizar <Link to="/persons">clique aqui</Link>
+                  }}> clique aqui</Link>.
                 </p>
               }
 
