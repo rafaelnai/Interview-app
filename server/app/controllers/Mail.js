@@ -1,7 +1,15 @@
 const Mail = require('../schemas/MailSchema')
 const Mailler = require('../../utils/sendMail')
 
-exports.createMail = function(req, res) {
+module.exports = app => {
+
+  app.route('/sendMail')
+    .get(listAllMails)
+    .post(createMail)  
+}
+
+
+const createMail = function(req, res) {
   const newMail = new Mail(req.body)
   newMail.save( (err, mail) => {
 
@@ -18,7 +26,7 @@ exports.createMail = function(req, res) {
   })
 }
 
-exports.listAllMails = function(req, res) {
+const listAllMails = function(req, res) {
   Mail.find({}, 
     (err, mail) => {
       err

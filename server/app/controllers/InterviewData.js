@@ -1,6 +1,21 @@
 const InterviewData = require('../schemas/InterviewDataSchema')
 
-exports.createInterviewData = (req, res) => {
+module.exports = app => {
+
+	app.route('/interviewData')
+		.get(listAllInterviewData)
+		.post(createInterviewData)
+			
+	app.route('/interviewData/theme/:theme')
+		.get(listInterviewDataByTheme)
+
+	app.route('/interviewData/person/:idPerson')
+		.get(listInterviewDataByIdPerson)
+		.put(updateInterviewData)
+		.delete(deleteInterviewData)
+}
+
+const createInterviewData = (req, res) => {
 
 	const newID = new InterviewData(req.body)
   	newID.save((err, interviewData) => {
@@ -11,7 +26,7 @@ exports.createInterviewData = (req, res) => {
   	})
 }
 
-exports.listAllInterviewData = (req, res) => {
+const listAllInterviewData = (req, res) => {
 
 	InterviewData.find({}, (err, interviewData) => {
 
@@ -21,7 +36,7 @@ exports.listAllInterviewData = (req, res) => {
   	})
 }
 
-exports.listInterviewDataByTheme = function(req, res) {
+const listInterviewDataByTheme = function(req, res) {
 
 	InterviewData.find(
 		{theme: req.params.theme }, 
@@ -34,7 +49,7 @@ exports.listInterviewDataByTheme = function(req, res) {
   	)
 }
 
-exports.listInterviewDataByIdPerson = (req, res) => {
+const listInterviewDataByIdPerson = (req, res) => {
 
 	InterviewData.find(
 		{idPerson: req.params.idPerson }, 
@@ -47,7 +62,7 @@ exports.listInterviewDataByIdPerson = (req, res) => {
   	)
 }
   
-exports.deleteInterviewData = (req, res) => {
+const deleteInterviewData = (req, res) => {
 
 	InterviewData.remove(
 		{personId: req.params.personId}, 
@@ -60,7 +75,7 @@ exports.deleteInterviewData = (req, res) => {
     )
 }
 
-exports.updateInterviewData = (req, res) => {
+const updateInterviewData = (req, res) => {
 
 	InterviewData.findOneAndUpdate(
 		{personId: req.params.personId}, 
