@@ -22,5 +22,9 @@
   "bugs": {
     "url": "https://github.com/rafaelnai/interview-app/issues"
   },
-  "homepage": "https://github.com/rafaelnai/interview-app#readme"
+  "homepage": "https://github.com/rafaelnai/interview-app#readme",
+  "dependencies": {},
+  "devDependencies": {
+    "concurrently": "^4.1.0"
+  }
 }
